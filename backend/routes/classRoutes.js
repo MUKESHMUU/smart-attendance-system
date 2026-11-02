@@ -1,0 +1,11 @@
+const r = require('express').Router();
+const { wrap } = require('../middleware/errorHandler');
+const auth = require('../middleware/authMiddleware');
+const role = require('../middleware/roleMiddleware');
+const c = require('../controllers/classController');
+r.use(auth, role('teacher'));
+r.get('/', wrap(c.list));
+r.post('/', wrap(c.create));
+r.put('/:id', wrap(c.update));
+r.delete('/:id', wrap(c.remove));
+module.exports = r;
